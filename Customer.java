@@ -2,7 +2,7 @@
 public class Customer {
 	//setting attributes
 	private String name;
-	private int dob;
+	private String dob;
 	private int bankPin;
 	private int bankNumber;
 	private double balance;
@@ -11,14 +11,14 @@ public class Customer {
 	//constructer
 	public Customer(){
 		setName("unknown");
-		setDob(0);
+		setDob("unkown");
 		setBankPin(0);
 		setBankNumber(0);
 		setBalance(0);
 
 	}
 		
-	public Customer(String name, int dob, int bankPin, int bankNumber, double balance)
+	public Customer(String name, String dob, int bankPin, int bankNumber, double balance)
 	{
 		this.name = name;
 		this.dob = dob;
@@ -31,7 +31,7 @@ public class Customer {
 	{
 		this.name = name;
 	}
-	public void setDob(int dob)
+	public void setDob(String dob)
 	{
 		this.dob = dob;
 	}
@@ -54,7 +54,7 @@ public class Customer {
 	{
 		return name;
 	}
-	public int getDob()
+	public String getDob()
 	{
 		return dob;
 	}
