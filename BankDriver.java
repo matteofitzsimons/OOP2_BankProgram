@@ -15,7 +15,7 @@ public class BankDriver extends JFrame implements ActionListener{
      public String name ="";
      public int bankPin;
      public String NameLogin;
-		 public int bankPinLogin;
+		 public static int bankPinLogin;
      	
      
     public static void main( String[] args ) {
@@ -32,6 +32,9 @@ public class BankDriver extends JFrame implements ActionListener{
 	        newSystem();
 	        
 	        ImageIcon img = new ImageIcon("");
+	        @SuppressWarnings("unused")
+			JLabel background=new JLabel(new ImageIcon("C:\\Users\\Matteo\\Downloads\\bankbuilding.jpg"));
+
 			setIconImage(img.getImage());
 		
 	        setTitle( "Home" );
@@ -82,40 +85,46 @@ public class BankDriver extends JFrame implements ActionListener{
 	      	Customers = new ArrayList<Customer> ();	
 	      		      	
 	      	}
-	    
 	    public void actionPerformed (ActionEvent e) {
 	      	if (e.getSource() == b1){
 	      	 String nameLogin  = JOptionPane.showInputDialog("Enter Your Name: ");
 			int bankPinLogin =  Integer.parseInt(JOptionPane.showInputDialog("Enter Your Pin Number: "));
-			 {
+			 
 			      	try{
 			      	  ObjectInputStream is;
 			      	  is = new ObjectInputStream(new FileInputStream ("Customer.dat"));
 			          Customer  = (Customer) is.readObject();
 			      	  is.close();
 			     }
-			if (nameLogin == name && bankPinLogin == bankPin)
-			{
-				JFrame loggedIn = new JFrame("Account");
-				loggedIn.setVisible(true);
-			
-			}
-			else
-			{
-			showMessage("Login Failed");
-			}
+			      	catch(Exception ex){}
+					if (nameLogin == name && bankPinLogin == bankPin)
+					{
+						JFrame loggedIn = new JFrame("Account");
+						loggedIn.setVisible(true);
+					
+					}
+					else
+					{
+					showMessage("Login Failed");
+					}		 	
 	      	}
-	      	else if (e.getSource().equals ("b2")){
-	      	   addCustomer(); throws IOException {
+	      	
+	      	else if (e.getSource()==("b2")){
+	      		System.out.println("hello");
+	      	   addCustomer();
+	      	   try{
 	      	      	ObjectOutputStream os;
-	      	      	oos = new ObjectOutputStream(new FileOutputStream ("Customer.dat"));
-	      	      	oos.writeObject(Customers);
-	      	      	oos.close(); 
+	      	      	os = new ObjectOutputStream(new FileOutputStream ("Customer.dat"));
+	      	      	os.writeObject(Customers);
+	      	      	os.close(); 
+	      	   		}
+	      	
+	      	   catch(Exception ex){}
 	      	}
 	      	
 	      	
-	      	else
-	      	  showMessage("Did not work");
+	      	//else
+	      	  //showMessage("Did not work");
 	      } 
 	      	
 	   
@@ -152,7 +161,10 @@ public class BankDriver extends JFrame implements ActionListener{
 	      	else
 	      	  JOptionPane.showMessageDialog("Please Retry");
 			{*/
-	    
+	   public static int getBankPinLogin()
+	    {
+   	return bankPinLogin;
+	    }
 	    
 	 }     
 

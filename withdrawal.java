@@ -1,29 +1,36 @@
-public class Lodge {
+
+public class withdrawal {
 	//setting attributes
 		private String transType ;
 		private String date;
 		private double amount;
 		private double balance;
-
+		private int bankPin;
+		Customer customer;
+		BankDriver bankDriver;
+		
+		// customer.getthibgamajig()
 
 		
 		//Constructor
-		public Lodge(){
-			setTransType("Lodgement");
+		public withdrawal(){
+			setTransType("withdraw");
 			setDate("unkown");
 			setAmount(0);
 			setBalance(0);
+			setBankPin(BankDriver.getBankPinLogin());
 
 
 		}
 			
-		public Lodge(String transType, String date, double amount, double  balance)
+		public withdrawal(String transType, String date, double amount, double  balance, int bankPin)
 		{
 
 			this.transType = transType;
 			this.date = date;
 			this.amount = amount;
 			this.balance = balance;
+			this.bankPin = bankPin;
 		}
 		//mutator methods
 
@@ -44,9 +51,13 @@ public class Lodge {
 		{
 			this.balance = balance;
 		}
+		public void setBankPin(int bankPin)
+		{
+			this.bankPin = bankPin;
+		}
 		
 		
-		//accessor method
+		//Accessory method
 		public String getTransType()
 		{
 			return transType;
@@ -64,11 +75,16 @@ public class Lodge {
 		{
 			return balance;
 		}
+		public int getBankPin()
+		{
+			return bankPin;
+		}
 		
 		//to string method
 		public String toString()
 		{
-			return "Transaction:"+getTransType() +"\nDate of Lodgement"+getDate()+"\nAmount:%.2f"+getAmount()+"\nNew Balance:%.2f"+getBalance();
+			return "Transaction:"+getTransType() +"\nDate of Withdrawal"+getDate()+"\nAmount:%.2f"+getAmount()+"\nNew Balance:%.2f"+getBalance()+
+					"Bank Pin:"+getBankPin();
 			
 		}
 
