@@ -1,5 +1,6 @@
-
-public class withdrawal {
+import java.io.Serializable;
+@SuppressWarnings("serial")
+public class withdrawal implements Serializable {
 	//setting attributes
 		private String transType ;
 		private String date;

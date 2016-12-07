@@ -1,4 +1,6 @@
-public class Lodgement {
+import java.io.Serializable;
+@SuppressWarnings("serial")
+public class Lodgement implements Serializable {
 	//setting attributes
 		private String transType ;
 		private String date;

@@ -1,3 +1,5 @@
+import java.io.Serializable;
+
 /**
  * 
  * @author Matteo
@@ -8,7 +10,9 @@
 	 * @param bankNumber
 	 * @param balance
  */
-public class Customer {
+
+@SuppressWarnings("serial")
+public class Customer implements Serializable {
 	//setting attributes
 	private String name;
 	private String dob;
