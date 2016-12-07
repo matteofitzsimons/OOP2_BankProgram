@@ -3,14 +3,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*; 
-import java.util.*;
-import java.util.List; 
+import java.util.*; 
 
 
 @SuppressWarnings("serial")
 public class BankDriver extends JFrame implements ActionListener{
      public JButton b1,b2;
-     public ArrayList <Customer> Customers; 
+     public ArrayList <Customer> CustomerArray; 
      Customer Customer;
      public String name ="";
      public int bankPin;
@@ -58,9 +57,8 @@ public class BankDriver extends JFrame implements ActionListener{
 	        
 	     }  
 	      	
-	        @SuppressWarnings("unchecked")
-			public void addCustomer(){
-	        Customers = new ArrayList<Customer>();	
+	        public void addCustomer(){
+	        CustomerArray = new ArrayList<Customer>();	
 	        
 	      	String name = JOptionPane.showInputDialog("Enter Your name: ");
 	      	
@@ -73,53 +71,59 @@ public class BankDriver extends JFrame implements ActionListener{
 			double balance =  Double.parseDouble(JOptionPane.showInputDialog("Enter Your Balance: "));
 			
 			
-		    Customer Customers = new Customer(name,dob,bankPin,bankNumber,balance);
-	      	((List<Customer>) Customer).add(Customers);
+			Customer = new Customer(name,dob,bankPin,bankNumber,balance);
+			CustomerArray.add(Customer);
+	      	//((List<Customer>) Customer).addAll(Customers);
 	      	JOptionPane.showMessageDialog(null,
-	      			"\nAccount added successfully" + "\nMember Details" +"\nnNmae:" + name + "\nDate of Birth:" + dob +                                          
+	      			"\nAccount added successfully" + "\nMember Details" +"\nName:" + name + "\nDate of Birth:" + dob +                                          
                        "\nBank Pin:" + bankPin +"\nBank Number:" + bankNumber +"\n\nBalance:" + balance);
 	      		                                            
 	        }     	
 	    public void newSystem (){
 	      	
-	      	Customers = new ArrayList<Customer> ();	
+	      	CustomerArray = new ArrayList<Customer> ();	
 	      		      	
 	      	}
+	    @SuppressWarnings("unchecked")
+		@Override
 	    public void actionPerformed (ActionEvent e) {
-	      	if (e.getSource() == b1){
+	      	if (e.getActionCommand().equals ("Login")){
 	      	 String nameLogin  = JOptionPane.showInputDialog("Enter Your Name: ");
 			int bankPinLogin =  Integer.parseInt(JOptionPane.showInputDialog("Enter Your Pin Number: "));
 			 
 			      	try{
 			      	  ObjectInputStream is;
-			      	  is = new ObjectInputStream(new FileInputStream ("Customer.dat"));
-			          Customer  = (Customer) is.readObject();
-			      	  is.close();
+			      	  is = new ObjectInputStream(new FileInputStream ("Customers.dat"));
+			          CustomerArray  = (ArrayList<Customer>) is.readObject();
+			      	  is.close();	      	  
 			     }
-			      	catch(Exception ex){}
-					if (nameLogin == name && bankPinLogin == bankPin)
-					{
-						JFrame loggedIn = new JFrame("Account");
-						loggedIn.setVisible(true);
-					
+			      	catch(Exception ex){ex.printStackTrace();}
+			      	
+			      	for(Customer p:CustomerArray){	
+			      		
+			 			if (p.getName().equals(nameLogin) && bankPinLogin == p.getBankPin()) {	
+			 				System.out.print("true");
+			 				JFrame loggedIn = new JFrame("Account");
+							loggedIn.setVisible(true);		
+			 			}
+						else
+						{							
+						showMessage("Login Failed");
+						}
 					}
-					else
-					{
-					showMessage("Login Failed");
-					}		 	
+					//System.out.print(CustomerArray.toString());
+					
 	      	}
 	      	
-	      	else if (e.getSource()==("b2")){
+	      	else if (e.getActionCommand().equals ("Register Customer")){
 	      		System.out.println("hello");
 	      	   addCustomer();
-	      	   try{
-	      	      	ObjectOutputStream os;
-	      	      	os = new ObjectOutputStream(new FileOutputStream ("Customer.dat"));
-	      	      	os.writeObject(Customers);
-	      	      	os.close(); 
-	      	   		}
-	      	
-	      	   catch(Exception ex){}
+				 try {
+					save();
+				} catch (IOException e1) {
+
+					e1.printStackTrace();
+				}
 	      	}
 	      	
 	      	
@@ -127,13 +131,23 @@ public class BankDriver extends JFrame implements ActionListener{
 	      	  //showMessage("Did not work");
 	      } 
 	      	
-	   
+	      public void save() throws IOException {
+	        	ObjectOutputStream os;
+	        	os = new ObjectOutputStream(new FileOutputStream ("Customers.dat"));
+	        	os.writeObject(CustomerArray);
+	        	os.close();
+	        }
 	      public void showMessage (String s){
 	      	JOptionPane.showMessageDialog(null,s);
 	      }
 	      
 	      public void showMessage (JTextArea s){
 	      	JOptionPane.showMessageDialog(null,s);
+	      }
+	      
+	      public void Open(){
+	    	  
+	    	  
 	      }
    
 	  /*    public void actionPerformed (ActionEvent e) {
